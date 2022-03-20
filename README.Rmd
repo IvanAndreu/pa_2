@@ -5,7 +5,7 @@ Author: Ivan Andreu Rascon
 ---
 
 ---
-output: html_document
+output: pdf_document
 ---
 # Manipulate the dataframe as necessary so that you can calculate average duration, f0 and intensity as a function of lexical stress (extra points if you can create a plot)
 
