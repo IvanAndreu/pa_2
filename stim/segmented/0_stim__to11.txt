@@ -1,4 +1,3 @@
-
 pinto_1
 pinto_2
 testo_1
