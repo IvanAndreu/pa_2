@@ -1,0 +1,144 @@
+---
+title: "Readme"
+output: html_document
+Author: Ivan Andreu Rascon 
+---
+
+---
+output: html_document
+---
+# Manipulate the dataframe as necessary so that you can calculate average duration, f0 and intensity as a function of lexical stress (extra points if you can create a plot)
+
+
+## Load library
+```{r}
+library(tidyverse)
+```
+
+## Read data into R
+```{r}
+read_csv("data/data.csv")
+```
+
+
+## Creation of the object with the CSV file
+```{r}
+my_data <- read_csv("data/data.csv")
+```
+
+
+## Mean duration
+```{r}
+mean(my_data$durationV)
+```
+
+
+## Mean f0
+```{r}
+mean(my_data$f0)
+```
+
+
+## Mean intensity
+```{r}
+mean(my_data$int)
+```
+
+## Summary
+```{r}
+my_data %>% 
+  summarize(dur_avg = mean(durationV), f0_avg = mean(f0), int_avg = mean(int))
+```
+
+Por alguna razón me redondea los números aquí 
+
+
+
+## Separate variable Info into different columns (word, stress)
+```{r}
+separate(data = my_data, col = info, into = c("word", "stress"), sep = "_")
+```
+
+
+## Assign it to an object
+```{r}
+my_new_data <- separate(data = my_data, col = info, into = c("word", "stress"), sep = "_")
+```
+
+
+## Means by lexical stress
+
+### Means of durationV for stress 1 and 2 
+```{r}
+my_new_data %>%
+  group_by(stress) %>%
+  summarize(mean_durationV = mean(durationV))
+```
+
+
+
+## Plots
+  No se si esto esta bien
+  
+### Plot of f0 and stress
+  
+
+```{r}
+my_data %>% 
+  separate(., col = info, into = c("item", "stress"), sep = "_") %>%
+  ggplot(., aes(x = stress, y = f0, color = item)) +
+    geom_point() 
+```
+
+### Plot of intensity and stress
+
+```{r}
+my_data %>% 
+  separate(., col = info, into = c("item", "stress"), sep = "_") %>%
+  ggplot(., aes(x = stress, y = int, color = item)) +
+    geom_point() 
+```
+
+
+### Plot of intensity and stress
+
+```{r}
+my_new_data %>%
+  ggplot(., aes(x = stress, y = int, col = "orange"))+
+  geom_point()
+```
+
+
+### Not sure what am I doing
+
+```{r}
+plot(x = my_data$f0 , y = my_data$int, type = 'o', xlab = "f0", ylab = "intensity", col = "orange")
+```
+
+
+```{r}
+plot(x = my_new_data$f0 , y = my_new_data$int, type = 'o', xlab = "f0", ylab = "intensity", col = "green")
+```
+
+```{r}
+plot(x = my_new_data$durationV , y = my_new_data$int, type = 'o', xlab = "f0", ylab = "intensity", col = "green")
+```
+
+
+```{r}
+hist(my_data$f0, 
+     main="f0", 
+     xlab="f0", 
+     ylab = "count",
+     border="black", 
+     col="blue",
+     xlim=c(90,115),
+     las=2, 
+     breaks=10)
+```
+
+
+
+
+
+
